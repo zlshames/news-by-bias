@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Browse all the news by their bias!",
   "main": "client/index.js",
+  "engines": {
+    "node": "7.6.0"
+  },
   "scripts": {
     "start": "node server.js",
     "build": "webpack --config build/webpack.prod.js",
