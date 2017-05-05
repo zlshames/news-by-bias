@@ -27,7 +27,7 @@
 
 <style scoped>
   .news-item {
-    min-height: 80px;
+    min-height: 100px;
     background-color: whitesmoke;
     border-radius: 5px;
   }
