@@ -150,4 +150,14 @@
     margin: 0 auto;
     padding-top: 15px;
   }
+
+  @media only screen and (max-width: 768px) {
+    .filter-container {
+      width: 90%;
+    }
+
+    .article-container {
+      width: 95%;
+    }
+  }
 </style>
