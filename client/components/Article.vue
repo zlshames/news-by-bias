@@ -1,12 +1,9 @@
 <template>
   <div class="news-item">
     <img class="poster" :src="(item.urlToImage) ? item.urlToImage : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTnpRRfTV56JXbzYi5WTV8SeIKXPd0AIAD_A7_xYIKRjhu1ZCvMw'" />
-    <span class="source-tag">{{ item.source.name }}</span>
+    <div class="source-tag">{{ item.source.name }}</div>
     <div class="news-info">
-      <h1>
-        <a :href="item.url" target="_black">{{ item.title }}</a>
-
-      </h1>
+      <h1><a :href="item.url" target="_black">{{ item.title }}</a></h1>
       <p class="publish-date">{{ date }}</p>
       <p class="description">{{ item.description }}</p>
     </div>
@@ -90,8 +87,8 @@
 
   @media only screen and (max-width: 768px) {
     h1 {
-      line-height: 10px;
-      font-size: 24px;
+      line-height: 15px;
+      font-size: 14px;
     }
   }
 </style>

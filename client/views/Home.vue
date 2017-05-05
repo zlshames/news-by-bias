@@ -15,6 +15,7 @@
           :piecewise="true"
           :piecewiseLabel="true"
           :piecewiseStyle="slider.piecewiseStyle"
+          :labelStyle="slider.labelStyle"
           :clickable="true"
           :processStyle="slider.processStyle"
         ></vue-slider>
@@ -55,6 +56,9 @@
           },
           processStyle: {
             backgroundColor: '#ccc'
+          },
+          labelStyle: {
+            fontSize: (window.innerWidth < 786) ? '8px' : '14px'
           }
         }
       }
@@ -82,6 +86,9 @@
     computed: {
       articles() {
         return this.$store.getters.articles
+      },
+      isMobile() {
+        return !(window.innerWidth < 786)
       }
     },
     async created() {
