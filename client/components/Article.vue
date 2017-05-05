@@ -35,7 +35,7 @@
     margin-left: 10px;
     margin-top: 10px;
     height: 80px;
-    width: 110px;
+    width: 130px;
     margin-right: 10px;
     border-radius: 3px;
   }
@@ -89,6 +89,10 @@
     h1 {
       line-height: 15px;
       font-size: 14px;
+    }
+
+    .source-tag {
+      font-size: 8px;
     }
   }
 </style>
