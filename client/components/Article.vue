@@ -28,6 +28,7 @@
     min-height: 100px;
     background-color: whitesmoke;
     border-radius: 5px;
+    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   }
 
   .poster {
@@ -35,7 +36,7 @@
     margin-left: 10px;
     margin-top: 10px;
     height: 80px;
-    width: 130px;
+    width: 125px;
     margin-right: 10px;
     border-radius: 3px;
   }
@@ -74,8 +75,12 @@
     margin-right: 10px;
     margin-left: 5px;
     padding: 4px;
-    vertical-align: middle;
     float: right;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
   }
 
   .publish-date {
