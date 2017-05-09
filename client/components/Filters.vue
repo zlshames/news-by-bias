@@ -7,7 +7,11 @@
       </div>
     </div>
     <div class="item">
-      Filter by Bias
+      Filter by Bias:
+      <div class="ui checkbox" style="margin-left: 20px; float: right;" @click="$store.dispatch('showAll', showAll)">
+        <input type="checkbox" name="example" v-model="showAll" />
+        <label style="padding-left: 1.5em;">Show All</label>
+      </div>
       <vue-slider
         class="slider"
         :width="slider.width"
@@ -36,6 +40,7 @@
     data() {
       return {
         searchTxt: '',
+        showAll: false,
         slider: {
           bias: 'Neutral',
           data: [
@@ -88,6 +93,11 @@
         this.$store.dispatch('searchArticles', this.searchTxt)
       }
     },
+    methods: {
+      toggleShowAll(e) {
+        console.log(this.showAll)
+      }
+    }
   }
 </script>
 

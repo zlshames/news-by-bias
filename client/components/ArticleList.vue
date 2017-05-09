@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <div v-if="articleList.length === 0" class="ui active inverted dimmer">
+    <div v-if="loading" class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
     </div>
 
@@ -14,15 +14,15 @@
         <a
           v-for="n in pages"
           v-if="currentPage > 4 && n > currentPage - 3 && n < currentPage + 3"
-          :class="[(currentPage == n) ? 'active' : '', 'item']"
+          :class="[(currentPage === n) ? 'active' : '', 'item']"
           @click="$router.push({ name: 'page', params: { page: n } })"
         >
           {{ n }}
         </a>
         <a
-          v-for="n in 5"
+          v-for="n in (pages < 5 ? pages : 5)"
           v-if="currentPage <= 4"
-          :class="[(currentPage == n) ? 'active' : '', 'item']"
+          :class="[(currentPage === n) ? 'active' : '', 'item']"
           @click="$router.push({ name: 'page', params: { page: n } })"
         >
           {{ n }}
@@ -61,6 +61,9 @@
         }
 
         return this.articles.slice(start, end)
+      },
+      loading() {
+        return this.$store.getters.loading
       }
     }
   }

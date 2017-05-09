@@ -11,7 +11,9 @@ const state = {
   bias: 0,
   pages: 1,
   perPage: 10,
-  currentPage: 1
+  currentPage: 1,
+  showAll: false,
+  loading: true
 }
 
 const helpers = {
@@ -29,6 +31,9 @@ const mutations = {
   SET_BIAS (state, newBias) {
     state.bias = newBias
   },
+  SET_SHOWALL (state, value) {
+    state.showAll = value
+  },
   SET_ARTICLES (state, articles) {
     state.articles = [...articles]
     state.filteredArticles = [...articles]
@@ -43,11 +48,14 @@ const mutations = {
   },
   RESET_ARTICLES (state) {
     state.filteredArticles = [...state.articles]
+  },
+  SET_LOADING (state, value) {
+    state.loading = value
   }
 }
 
 const actions = {
-  addArticles ({ commit }, { articles, source }) {
+  addArticles ({ commit, dispatch, getters }, { articles, source }) {
     let currArticles = state.articles
 
     const outlet = NewsSources[source]
@@ -76,8 +84,10 @@ const actions = {
 
     // Apply articles
     commit('SET_ARTICLES', currArticles)
+    commit('SET_LOADING', false)
+    dispatch('setBiasFilter', getters.bias)
   },
-  searchArticles (ctx, search) {
+  searchArticles ({ commit, getters }, search) {
     if (!search || search.length === 0) {
       return
     }
@@ -85,40 +95,46 @@ const actions = {
     let articles = [...state.articles]
 
     // Filter by bias first
-    articles = articles.filter(item => {
-      if (ctx.getters.bias > 0) {
-        return (item.source.bias >= ctx.getters.bias)
-      } else {
-        return (item.source.bias <= ctx.getters.bias)
-      }
-    })
+    if (!getters.showAll) {
+      articles = articles.filter(item => {
+        if (getters.bias > 0) {
+          return (item.source.bias >= getters.bias)
+        } else {
+          return (item.source.bias <= getters.bias)
+        }
+      })
+    }
 
     // Filter by search term
     articles = articles.filter(item => {
       return (item.title.toLowerCase().indexOf(search.toLowerCase()) > -1)
     })
 
-    ctx.commit('SET_FILTERED_ARTICLES', articles)
+    commit('SET_FILTERED_ARTICLES', articles)
+    commit('SET_CURRENT_PAGE', 1)
   },
-  setBiasFilter ({ commit }, bias) {
-    if (bias === 0) {
-      commit('RESET_ARTICLES')
-      return
-    } else {
-      commit('SET_BIAS', bias)
+  setBiasFilter ({ commit, getters }, bias) {
+    let articles = [...state.articles]
+
+    if (!getters.showAll) {
+      articles = articles.filter(item => {
+          return (item.source.bias >= bias - 1 && item.source.bias <= bias + 1)
+      })
     }
 
-    let articles = [...state.articles]
-    articles = articles.filter(item => {
-      if (bias > 0) {
-        return (item.source.bias >= bias)
-      } else {
-        return (item.source.bias <= bias)
-      }
-    })
-
-
+    commit('SET_BIAS', bias)
     commit('SET_FILTERED_ARTICLES', articles)
+    commit('SET_CURRENT_PAGE', 1)
+  },
+  showAll ({ commit, dispatch, state }, value) {
+    commit('SET_SHOWALL', value)
+
+    if (value) {
+      commit('SET_ARTICLES', state.articles)
+      commit('SET_CURRENT_PAGE', 1)
+    } else {
+      dispatch('setBiasFilter', state.bias)
+    }
   }
 }
 
@@ -137,6 +153,12 @@ const getters = {
   },
   perPage (state) {
     return Number(state.perPage)
+  },
+  showAll (state) {
+    return Boolean(state.showAll)
+  },
+  loading (state) {
+    return Boolean(state.loading)
   }
 }
 
