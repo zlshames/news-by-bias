@@ -127,16 +127,16 @@ const getters = {
     return state.filteredArticles
   },
   bias (state) {
-    return state.bias
+    return Number(state.bias)
   },
   pages (state) {
-    return state.pages
+    return Number(state.pages)
   },
   currentPage (state) {
-    return state.currentPage
+    return Number(state.currentPage)
   },
   perPage (state) {
-    return state.perPage
+    return Number(state.perPage)
   }
 }
 

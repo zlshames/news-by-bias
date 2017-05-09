@@ -37,7 +37,18 @@
         return !(window.innerWidth < 786)
       }
     },
+    watch: {
+      '$route': function() {
+        if (this.$route.params.page && this.$route.params.page > 0) {
+          this.$store.commit('SET_CURRENT_PAGE', this.$route.params.page)
+        }
+      }
+    },
     async created() {
+      if (this.$route.params.page && this.$route.params.page > 0) {
+        this.$store.commit('SET_CURRENT_PAGE', this.$route.params.page)
+      }
+
       // Fetch news from all sources
       for (let key in NewsSources) {
         this.fetchNews(key)

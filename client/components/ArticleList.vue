@@ -14,16 +14,16 @@
         <a
           v-for="n in pages"
           v-if="currentPage > 4 && n > currentPage - 3 && n < currentPage + 3"
-          :class="[(currentPage === n) ? 'active' : '', 'item']"
-          @click="$store.commit('SET_CURRENT_PAGE', n)"
+          :class="[(currentPage == n) ? 'active' : '', 'item']"
+          @click="$router.push({ name: 'page', params: { page: n } })"
         >
           {{ n }}
         </a>
         <a
           v-for="n in 5"
-          v-if="currentPage < 5"
-          :class="[(currentPage === n) ? 'active' : '', 'item']"
-          @click="$store.commit('SET_CURRENT_PAGE', n)"
+          v-if="currentPage <= 4"
+          :class="[(currentPage == n) ? 'active' : '', 'item']"
+          @click="$router.push({ name: 'page', params: { page: n } })"
         >
           {{ n }}
         </a>
